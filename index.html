@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>XML Projekt</title>
+    <style>
+        *{
+            margin: 0 auto;
+            padding: 0 auto;
+            text-align: center;
+            color: yellow;
+        }
+        h1{
+            background-color: grey;
+            padding: 25px;
+        }
+        p,body{
+            background-color: black;
+        }
+        footer{
+            background-color: grey;
+            padding: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Champion stats</h1>
+    <div id='stats'>
+        <table id='champions' cellpadding='15px' style="text-align:left;">
+            <thead>
+                <tr>
+                    <th>Champion</th>
+                    <th>Health</th>
+                    <th>Mana</th>
+                    <th>Attack Damage</th>
+                    <th>Attack Speed</th>
+                    <th>Armor</th>
+                    <th>Magic Resist</th>
+                    <th>Movement Speed</th>
+                    <th>Range</th>
+                    <th>Class</th>
+                </tr>                
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let xmlContent = '';
+        let tableStats = document.getElementById('champions');
+        fetch('stats.xml').then((response)=> {response.text().then((xml)=>{xmlContent = xml;
+
+                let parser = new DOMParser();
+                let xmlDOM = parser.parseFromString(xmlContent, 'application/xml');
+                let stats = xmlDOM.querySelectorAll('champ');
+
+                stats.forEach(champXmlNode => {
+
+                    let row = document.createElement('tr');
+
+                    //champion
+                    let td = document.createElement('td');
+                    td.innerText = champXmlNode.children[0].innerHTML;
+                    row.appendChild(td);
+
+                    //health
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[1].innerHTML;
+                    row.appendChild(td);
+                    
+                    //mana
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[2].innerHTML;
+                    row.appendChild(td);
+                    
+                    //attack damage
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[3].innerHTML;
+                    row.appendChild(td);
+
+                    //attack speed
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[4].innerHTML;
+                    row.appendChild(td);
+
+                    //armor
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[5].innerHTML;
+                    row.appendChild(td);
+
+                    //magic resist
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[6].innerHTML;
+                    row.appendChild(td);
+
+                    //movement speed
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[7].innerHTML;
+                    row.appendChild(td);
+
+                    //range
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[8].innerHTML;
+                    row.appendChild(td);
+
+                    //class
+                    td = document.createElement('td');
+                    td.innerText = champXmlNode.children[9].innerHTML;
+                    row.appendChild(td);
+
+                    tableStats.children[1].appendChild(row);   
+                });   
+            });
+        });    
+    </script>
+    <br/><p>Ostatak championa dolazi u novijoj verziji. TBD</p><br/><br/>
+    <footer>
+        © Filip Slamar 2021.
+    </footer>
+</body>
+</html>
